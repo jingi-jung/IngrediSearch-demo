@@ -14,15 +14,15 @@ public class FakeFavoritesSource implements FavoritesSource {
     @Override
     public void addFavorite(Recipe recipe) {
         List<Recipe> favorites = getFavorites();
-        if (isDuplicated(favorites, recipe)) return;
+        if (contains(recipe)) return;
 
         Recipe newFavorite = new Recipe(recipe);
         newFavorite.setFavorite(true);
         favorites.add(newFavorite);
     }
 
-    private boolean isDuplicated(List<Recipe> recipes, Recipe recipe) {
-        return recipes.stream().anyMatch(r -> r.isSameAs(recipe));
+    private boolean contains(Recipe recipe) {
+        return mFavorites.stream().anyMatch(r -> r.isSameAs(recipe));
     }
 
     @Override

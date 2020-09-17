@@ -6,10 +6,13 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.contrib.DrawerActions;
 import androidx.test.espresso.contrib.DrawerMatchers;
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.demo.ingredisearch.R;
 import com.demo.ingredisearch.RecipeApplication;
+import com.demo.ingredisearch.TestData;
+import com.demo.ingredisearch.UITests;
 import com.demo.ingredisearch.repository.RecipeRepository;
 import com.demo.ingredisearch.repository.sources.favorites.FakeFavoritesSource;
 import com.demo.ingredisearch.repository.sources.remote.FakeRemoteDataSource;
@@ -40,11 +43,12 @@ public class MainActivityTest {
     public ActivityScenarioRule<MainActivity> rule = new ActivityScenarioRule<>(MainActivity.class);
 
     RecipeRepository mRecipeRepository;
+    FakeRemoteDataSource mRemoteDataSource;
 
     @Before
     public void init() {
         RecipeApplication app = ApplicationProvider.getApplicationContext();
-        FakeRemoteDataSource mRemoteDataSource = new FakeRemoteDataSource(new SingleExecutors());
+        mRemoteDataSource = new FakeRemoteDataSource(new SingleExecutors());
         FakeFavoritesSource mFavoritesSource = new FakeFavoritesSource();
         mRecipeRepository = RecipeRepository.getInstance(mRemoteDataSource, mFavoritesSource);
         app.getInjection().setRecipeRepository(mRecipeRepository);
@@ -217,6 +221,33 @@ public class MainActivityTest {
 
         // Act (When)
         // press back button twice
+        Espresso.pressBack();
+        Espresso.pressBack();
+
+        // Assert (Then)
+        // check whether main screen in view
+        checkMainScreenBodyDisplayed();
+    }
+
+    @Test
+    public void navigateToSearchScreenToSearchResultsToRecipeDetails_and_backToMainScreen() {
+        // Arrange (Given)
+        // add test data to fake remote data source
+        mRemoteDataSource.addRecipes(TestData.mRecipes);
+
+        // click on Search button
+        onView(withId(R.id.searchButton)).perform(click());
+
+        // enter query and press searchActionButton
+        onView(withId(R.id.ingredients)).perform(typeText("eggs"), closeSoftKeyboard());
+        onView(withId(R.id.searchActionButton)).perform(click());
+
+        // select a recipe
+        onView(withId(R.id.list)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+
+        // Act (When)
+        // press back button twice
+        Espresso.pressBack();
         Espresso.pressBack();
         Espresso.pressBack();
 

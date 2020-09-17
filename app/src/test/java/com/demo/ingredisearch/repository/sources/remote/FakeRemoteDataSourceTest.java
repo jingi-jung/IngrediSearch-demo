@@ -246,7 +246,7 @@ public class FakeRemoteDataSourceTest {
     public void searchRecipe_whenSucceed_returnsRecipe2() {
         // Arrange (Given)
         mRemoteDataSource.addRecipes(TestData.mRecipes);
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
 
         // Act (When)
         mRemoteDataSource.searchRecipe(TestData.recipe1.getRecipeId(), recipeResponseCallback);

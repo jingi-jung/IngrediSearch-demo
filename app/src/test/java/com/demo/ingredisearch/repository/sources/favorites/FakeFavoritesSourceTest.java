@@ -21,7 +21,6 @@ public class FakeFavoritesSourceTest {
     @Before
     public void init() {
         mFavoritesSource = new FakeFavoritesSource();
-        mFavoritesSource.clearFavorites();
     }
 
     @Test
