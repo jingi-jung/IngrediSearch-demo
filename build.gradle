@@ -3,7 +3,7 @@
 buildscript {
     ext {
         navigationVersion = "1.0.0-rc02"
-        gradleVersion = '4.0.1'
+        gradleVersion = '4.1.0'
     }
     repositories {
         google()

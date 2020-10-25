@@ -39,7 +39,7 @@ public class RecipeApiClientTest {
 
     @Test
     public void searchRecipes_whenFailedWithHTTPError_returnsErrorResponse() {
-// Arrange (Given)
+        // Arrange (Given)
 
         // Act (When)
 
