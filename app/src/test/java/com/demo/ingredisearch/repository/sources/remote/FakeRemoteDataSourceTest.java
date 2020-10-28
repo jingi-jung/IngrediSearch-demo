@@ -30,7 +30,6 @@ public class FakeRemoteDataSourceTest {
     
     @Before
     public void init() {
-        
         mRemoteDataSource = new FakeRemoteDataSource(new SingleExecutors());
     }
 
